@@ -1,0 +1,14 @@
+{
+  "name": "travian-bot-cloud",
+  "version": "1.0.0",
+  "description": "A simple tool to be deployed on cloud to automate and strategize some action in travina game.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "T. Zwierzynski",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.8.1"
+  }
+}

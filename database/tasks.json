@@ -1,0 +1,34 @@
+{
+    "villages": [
+        {
+            "name": "02.Brick",
+            "steps": [
+                {
+                    "type": "MAIN_BUILDING",
+                    "level": 3,
+                    "state": "DONE"
+                },
+                {
+                    "type": "WAREHOUSE",
+                    "level": 5,
+                    "state": "DONE"
+                },
+                {
+                    "type": "GRANARY",
+                    "level": 5,
+                    "state": "DONE"
+                },
+                {
+                    "type": "ALL_RESOURCE_FIELDS",
+                    "level": 5,
+                    "state": "PENDING"
+                },
+                {
+                    "type": "ALL_RESOURCE_FIELDS",
+                    "level": 6,
+                    "state": "PENDING"
+                }
+            ]
+        }
+    ]
+}

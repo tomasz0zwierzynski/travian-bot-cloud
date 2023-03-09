@@ -1,0 +1,31 @@
+ The ChromeDriver could not be found on the current PATH, trying Selenium Manager
+Unable to obtain driver using Selenium Manager: Error: Error executing command with C:\Users\Partial Derivative\Documents\projects\travian_bot_cloud\node_modules\selenium-webdriver\bin\windows\selenium-manager.exe,--browser,chrome
+'C:\Users\Partial' is not recognized as an internal or external command,
+operable program or batch file.
+
+Logging in Travian
+Staring executor...
+{"villages":[{"name":"02.Brick","steps":[{"type":"MAIN_BUILDING","level":3,"state":"DONE"},{"type":"WAREHOUSE","level":5,"state":"DONE"},{"type":"GRANARY","level":5,"state":"DONE"},{"type":"ALL_RESOURCE_FIELDS","level":5,"state":"PENDING"},{"type":"ALL_RESOURCE_FIELDS","level":6,"state":"PENDING"}]}]}
+Doing village: 02.Brick
+Doing the next step: {"type":"ALL_RESOURCE_FIELDS","level":5,"state":"PENDING"}
+[TARGET] allResourceLevelAt(02.Brick, 5)
+[MOVING] goToVillage(02.Brick)
+[CHECKING] checkBuildQueue()
+[CHECKING] checkBuildQueue() = true
+Something already building...
+[TARGET] allResourceLevelAt(...) = BUSY
+Finished executor, saving state to JSON...
+Finishing script
+Logging in Travian
+Staring executor...
+{"villages":[{"name":"02.Brick","steps":[{"type":"MAIN_BUILDING","level":3,"state":"DONE"},{"type":"WAREHOUSE","level":5,"state":"DONE"},{"type":"GRANARY","level":5,"state":"DONE"},{"type":"ALL_RESOURCE_FIELDS","level":5,"state":"PENDING"},{"type":"ALL_RESOURCE_FIELDS","level":6,"state":"PENDING"}]}]}
+Doing village: 02.Brick
+Doing the next step: {"type":"ALL_RESOURCE_FIELDS","level":5,"state":"PENDING"}
+[TARGET] allResourceLevelAt(02.Brick, 5)
+[MOVING] goToVillage(02.Brick)
+[CHECKING] checkBuildQueue()
+[CHECKING] checkBuildQueue() = true
+Something already building...
+[TARGET] allResourceLevelAt(...) = BUSY
+Finished executor, saving state to JSON...
+Finishing script
