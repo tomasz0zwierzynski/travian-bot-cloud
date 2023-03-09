@@ -1,4 +1,5 @@
 const {Builder, Browser, By, Key, until} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 
 const tasks = require('./database/tasks.json');
 const fs = require('fs');
@@ -50,7 +51,10 @@ async function executor(driver) {
 }
 
 (async function run() {
-  let driver = await new Builder().forBrowser(Browser.CHROME).build();
+    let driver = new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+    .build();
   try {
     await login(driver);
 
