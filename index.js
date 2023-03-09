@@ -21,6 +21,11 @@ const BUILDINGS_TYPES = [
     {type: 'MAIN_BUILDING', id: 26}, {type: 'WAREHOUSE', id: 20}, {type: 'GRANARY', id: 19} // etc. TODO
 ]
 
+const screen = {
+    width: 640,
+    height: 480
+};
+
 async function executor(driver) {
     console.log(`Staring executor...`);
 
