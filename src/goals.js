@@ -14,7 +14,24 @@ const RESOURCE_FIELDS_ORDER = [
 // ]
 
 const BUILDINGS_TYPES = [ // TODO: dokończyć implementpwanie - i zaimplementowac mapowanie per village
-    {type: 'MAIN_BUILDING', id: 26}, {type: 'WAREHOUSE', id: 20}, {type: 'GRANARY', id: 19} // etc. TODO
+    {type: 'MAIN_BUILDING', id: 26},
+    {type: 'WAREHOUSE', id: 20},
+    {type: 'GRANARY', id: 19},
+    {type: 'RESIDENCE', id: 31},
+    {type: 'MARKETPLACE', id: 30},
+    {type: 'RALLY_POINT', id: 39},
+    {type: 'BARRACKS', id: 28},
+    {type: 'ACADEMY', id: 27},
+    {type: 'CRANNY', id: 24},
+    {type: 'EMBASSY', id: 21},
+    {type: 'SMITHY', id: 32},
+    {type: 'STABLE', id: 37},
+    {type: 'TOWN_HALL', id: 34},
+    {type: 'BRICKYARD', id: 29},
+    {type: 'GRAIN_MILL', id: 22},
+    {type: 'SAWMILL', id: 23},
+    {type: 'IRON_FOUNDRY', id: 25},
+    {type: 'BAKERY', id: 33}
 ];
 
 // TRAVIAN - GOALS

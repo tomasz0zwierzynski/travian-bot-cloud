@@ -13,8 +13,6 @@ const screen = {
     height: 480
 };
 
-// TODO: config file like "user" "pass" "headless" etc.
-
 async function executor(driver) {
     console.log(`Staring executor...`);
 
@@ -22,6 +20,12 @@ async function executor(driver) {
 
     for (let i = 0; i < goals.villages.length; i++) {
         const village = goals.villages[i];
+
+        // TODO: uncomment
+        // if (!village.enabled) {
+        //     console.log(`Skipping village: ${villageName} - it's disabled`);
+        //     continue;
+        // }
 
         const villageName = village.name;
         const steps = village.steps;
@@ -78,6 +82,36 @@ async function doStep(driver, villageName, step) {
             stepResult = await goalsService.buildingLevelAt(driver, villageName, 'WAREHOUSE', step.level);
         } else if (step.type === 'GRANARY') {
             stepResult = await goalsService.buildingLevelAt(driver, villageName, 'GRANARY', step.level);
+        } else if (step.type === 'RESIDENCE' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'RESIDENCE', step.level);
+        } else if (step.type === 'MARKETPLACE' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'MARKETPLACE', step.level);
+        } else if (step.type === 'RALLY_POINT' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'RALLY_POINT', step.level);
+        } else if (step.type === 'BARRACKS' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'BARRACKS', step.level);
+        } else if (step.type === 'ACADEMY' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'ACADEMY', step.level);
+        } else if (step.type === 'CRANNY' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'CRANNY', step.level);
+        } else if (step.type === 'EMBASSY' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'EMBASSY', step.level);
+        } else if (step.type === 'SMITHY' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'SMITHY', step.level);
+        } else if (step.type === 'STABLE' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'STABLE', step.level);
+        } else if (step.type === 'TOWN_HALL' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'TOWN_HALL', step.level);
+        } else if (step.type === 'BRICKYARD' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'BRICKYARD', step.level);
+        } else if (step.type === 'GRAIN_MILL' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'GRAIN_MILL', step.level);
+        } else if (step.type === 'SAWMILL' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'SAWMILL', step.level);
+        } else if (step.type === 'IRON_FOUNDRY' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'IRON_FOUNDRY', step.level);
+        } else if (step.type === 'BAKERY' ) {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'BAKERY', step.level);
         } else {
             console.log(`Unknown step: ${step}`);
         }
