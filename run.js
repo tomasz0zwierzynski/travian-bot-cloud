@@ -112,6 +112,8 @@ async function doStep(driver, villageName, step) {
             stepResult = await goalsService.buildingLevelAt(driver, villageName, 'IRON_FOUNDRY', step.level);
         } else if (step.type === 'BAKERY' ) {
             stepResult = await goalsService.buildingLevelAt(driver, villageName, 'BAKERY', step.level);
+        } else if (step.type === 'STONE_WALL') {
+            stepResult = await goalsService.buildingLevelAt(driver, villageName, 'STONE_WALL', step.level);
         } else {
             console.log(`Unknown step: ${step}`);
         }

@@ -31,7 +31,8 @@ const BUILDINGS_TYPES = [ // TODO: dokończyć implementpwanie - i zaimplementow
     {type: 'GRAIN_MILL', id: 22},
     {type: 'SAWMILL', id: 23},
     {type: 'IRON_FOUNDRY', id: 25},
-    {type: 'BAKERY', id: 33}
+    {type: 'BAKERY', id: 33},
+    {type: 'STONE_WALL', id: 40}
 ];
 
 // TRAVIAN - GOALS

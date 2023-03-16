@@ -9,6 +9,7 @@
   "author": "T. Zwierzynski",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
     "selenium-webdriver": "^4.8.1"
   }
 }

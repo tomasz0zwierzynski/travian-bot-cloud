@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Travian bot GUI v0.1</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-auto">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Credentials</h5>
+                        <form>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-success col mx-3" onclick="load(this.form);">Load</button>
+                            </div>
+                        </form>
+
+                        <div id="msg" class="mt-4 text-center">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <ul class="nav nav-tabs" id="villages-tabs">
+                </ul>
+                
+                <div class="tab-content" id="villages-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="scripts/jquery-3.4.0.min.js"></script>
+<script>
+    function tabClicked(villageName) {
+        console.log(`tabClicked ${villageName}`);
+
+        document.getElementById(`village-${currentTab}-tab`).classList.remove('active');
+        document.getElementById(`village-${currentTab}-content`).classList.remove('active');
+
+        document.getElementById(`village-${villageName}-tab`).classList.add('active');
+        document.getElementById(`village-${villageName}-content`).classList.add('active');
+
+        currentTab = villageName;
+    }
+</script>
+<script>
+    let loadedVillages;
+
+    let currentTab;
+
+    let currentUsername;
+    let currentPassword;
+
+    function load(form) {
+        const username = form.username.value;
+        const password = form.password.value;
+
+        currentUsername = username;
+        currentPassword = password;
+
+        fetchVillages(username, password);
+    } 
+
+    function fetchVillages(username, password) {
+        $.post('/api/villages', { 'username': username, 'password': password })
+            .done(villages => {
+                if (!villages || villages.length === 0) {
+                    document.getElementById("msg").innerHTML = '<div class="alert alert-danger">No data fetched!</div>';
+                } else {
+                    document.getElementById("msg").innerHTML = '';
+                    
+                    loadedVillages = villages;
+                
+                    renderTabs();
+                }                
+        });
+    }
+
+    function renderTabs() {
+        const tabs = document.getElementById('villages-tabs');
+        const content = document.getElementById('villages-content');
+        
+        tabs.innerHTML = '';
+        content.innerHTML = '';
+
+        loadedVillages.forEach(village => {
+            const tab = document.createElement('li');
+            tab.classList.add('nav-item');
+            tab.innerHTML = `<button class="nav-link" id="village-${village.name}-tab" data-bs-toggle="tab" type="button" role="tab" onclick="tabClicked('${village.name}')">${village.name}</button>`;
+            tabs.appendChild(tab);
+
+            const tabContent = document.createElement('div');
+            tabContent.setAttribute('id', `village-${village.name}-content`);
+            tabContent.classList.add('tab-pane');
+            tabContent.appendChild(renderSteps(village.steps, village.name));
+            content.appendChild(tabContent);
+        });
+        
+        const addTab = document.createElement('li');
+        addTab.classList.add('nav-item');
+        addTab.innerHTML = `<button class="nav-link" id="village-+-tab" data-bs-toggle="tab" type="button" role="tab" onclick="tabClicked('+')"><span class="font-italic">Add village</span></button>`;
+        tabs.appendChild(addTab);
+
+        const addTabContent = document.createElement('div');
+        addTabContent.setAttribute('id', `village-+-content`);
+        addTabContent.classList.add('tab-pane');
+        addTabContent.appendChild(renderNewVillageStep());
+        content.appendChild(addTabContent);
+
+        if (currentTab) {
+            tabClicked(currentTab);
+        } else {
+            currentTab = loadedVillages[0].name;
+            tabClicked(loadedVillages[0].name);
+        }
+    }
+
+    function newVillageClicked(form) {
+        // TODO: to be implemented
+        const newVillageName = form.name.value;
+
+        $.post(`/api/villages/${newVillageName}`, {'username': currentUsername, 'password': currentPassword, 'name': newVillageName })
+            .done(data => {
+                console.log(data);
+                if (data !== 'fail') {
+                    fetchVillages(currentUsername, currentPassword);
+                }
+        });
+
+    }
+
+    function renderNewVillageStep() {
+        const elem =  document.createElement('p');
+
+        elem.innerHTML = `
+        <form>
+            <div class="row">
+                <div class="form-group col-8">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Village Name">
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-success" onclick="newVillageClicked(this.form);">Create</button>
+                </div>
+            </div>
+        </form>
+        `;
+
+        return elem;
+    }
+
+    function renderSteps(steps, villageName) {
+        const content = document.createElement('ul');
+        content.classList.add('list-group');
+
+        steps.forEach(step => {
+            const singleStep = document.createElement('li');
+            singleStep.classList.add('list-group-item');
+            singleStep.innerHTML = `
+            <div class="d-flex">
+                <div style="width:5rem">
+                    ${step.state === 'DONE' ? `<span class="badge badge-success">${step.state}</span>` : `<span class="badge badge-secondary">${step.state}</span>`} 
+                </div>
+                <div>
+                Step <span class="font-weight-bold">${step.type}</span> to level <span class="font-weight-bold">${step.level}</span>
+                </div>
+            </div>
+            `;
+
+            content.appendChild(singleStep);
+        });
+
+
+        const addNewPanel = document.createElement('div');
+        addNewPanel.innerHTML = `
+        <hr/>
+        <label>Add new step</label>
+        <form>
+            <div class="row">
+                <div class="form-group col-4">
+                    <select class="form-select" id="type" name="type">
+                        <option selected>Select step type</option>
+                        <option value="ALL_RESOURCE_FIELDS">All resource fields</option>
+                        <option value="MAIN_BUILDING">Main Building</option>
+                        <option value="WAREHOUSE">Warehouse</option>
+                        <option value="GRANARY">Granary</option>
+                        <option value="RESIDENCE">Residence</option>
+                        <option value="MARKETPLACE">Marketplace</option>
+                        <option value="RALLY_POINT">Rally Point</option>
+                        <option value="BARRACKS">Barracks</option>
+                        <option value="ACADEMY">Academy</option>
+                        <option value="CRANNY">Cranny</option>
+                        <option value="EMBASSY">Embassy</option>
+                        <option value="SMITHY">Smithy</option>
+                        <option value="STABLE">Stable</option>
+                        <option value="TOWN_HALL">Town Hall</option>
+                        <option value="BRICKYARD">Brickyard</option>
+                        <option value="GRAIN_MILL">Grain Mill</option>
+                        <option value="SAWMILL">Sawmill</option>
+                        <option value="IRON_FOUNDRY">Iron Foundry</option>
+                        <option value="BAKERY">Bakery</option>
+                        <option value="STONE_WALL">Stone Wall</option>
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <input type="number" class="form-control" id="level" name="level" placeholder="Level">
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-success" onclick="addStep(this.form, '${villageName}');">Add</button>
+                    <button type="button" class="btn btn-danger" onclick="removeSteps('${villageName}');">Remove all steps</button>
+                </div>
+            </div>
+        </form>
+        `;
+        content.appendChild(addNewPanel);
+
+        return content;
+    }
+
+    function addStep(form, villageName) {
+        const type = form.type.value;
+        const level = form.level.value;
+
+        console.log(`Type: ${type}, level: ${level} to village ${villageName}`);
+
+
+        
+        $.post(`/api/villages/${villageName}/steps`, {'username': currentUsername, 'password': currentPassword, 'type': type, 'level': level })
+            .done(data => {
+                console.log(data);
+                if (data !== 'fail') {
+                    fetchVillages(currentUsername, currentPassword);
+                }
+        });
+    }
+
+    function removeSteps(villageName) {
+        console.log(`Remove all steps from village ${villageName}`);
+
+        $.post(`/api/villages/${villageName}/steps/delete`, {'username': currentUsername, 'password': currentPassword})
+            .done(data => {
+                console.log(data);
+                if (data !== 'fail') {
+                    fetchVillages(currentUsername, currentPassword);
+                }
+        });
+
+        // $.ajax({
+        //     url: `/api/village/${villageName}/steps`,
+        //     data: {username: currentUsername, password: currentPassword},
+        //     contentType:'application/json',
+        //     dataType: 'text',
+        //     type: 'DELETE',
+        //     success: data => {
+        //         console.log(data);
+        //         if (data !== 'fail') {
+        //             fetchVillages(currentUsername, currentPassword);
+        //         }
+        //     }
+        // });
+    }
+
+
+</script>
+
+</html>
