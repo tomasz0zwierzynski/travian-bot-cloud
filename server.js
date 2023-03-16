@@ -42,7 +42,8 @@ app.post('/api/villages', (req, res) => {
     const password = req.body.password;
 
     if (username === 'theramorphus' &&  password === 'letmein') {
-        const goals = require('./database/goals.json');
+        // const goals = require('./database/goals.json');
+        const goals = JSON.parse(fs.readFileSync('./database/goals.json', 'utf8'));
 
         res.send(goals.villages);
     } else {
@@ -60,7 +61,8 @@ app.post('/api/villages/:village', (req, res) => {
     const password = req.body.password;
 
     if (username === 'theramorphus' &&  password === 'letmein') {
-        const goals = require('./database/goals.json');
+        // const goals = require('./database/goals.json');
+        const goals = JSON.parse(fs.readFileSync('./database/goals.json', 'utf8'));
 
         goals.villages.push({name: village, steps: []});
 
@@ -96,7 +98,8 @@ app.post('/api/villages/:village/steps', (req, res) => {
     console.log(`POST /api/villages/${village}/steps`);
 
     if (username === 'theramorphus' &&  password === 'letmein') {
-        const goals = require('./database/goals.json');
+        // const goals = require('./database/goals.json');
+        const goals = JSON.parse(fs.readFileSync('./database/goals.json', 'utf8'));
 
         const vila = goals.villages.find(villa => villa.name === village);
 
@@ -127,7 +130,8 @@ app.post('/api/villages/:village/steps/delete', (req, res) => {
     console.log(`DELETE /api/villages/${village}/steps`);
     // remove all steps from village
     if (username === 'theramorphus' &&  password === 'letmein') {
-        const goals = require('./database/goals.json');
+        // const goals = require('./database/goals.json');
+        const goals = JSON.parse(fs.readFileSync('./database/goals.json', 'utf8'));
 
         const vila = goals.villages.find(villa => villa.name === village);
 
